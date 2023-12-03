@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lab12.Views.TaskView"
+             xmlns:converters="clr-namespace:Lab12.Converters"
+             xmlns:local="clr-namespace:Lab12.ViewModels">
+    <ContentPage.BindingContext>
+        <local:TaskViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StatusConverter x:Key="StatusConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Padding="30" Spacing="10">
+
+            <Label Text="Title" FontSize="Large" TextColor="#3498db" />
+            <Entry Text="{Binding Title}" Placeholder="Enter title" />
+
+            <Label Text="Description" FontSize="Large" TextColor="#3498db" />
+            <Editor Text="{Binding Description}" Placeholder="Enter description" 
+            AutoSize="TextChanges" MinimumHeightRequest="30" VerticalOptions="StartAndExpand"/>
+
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                <Label Text="Status" FontSize="Large" TextColor="#3498db" VerticalOptions="CenterAndExpand" />
+
+                <CheckBox IsChecked="{Binding Status}" Color="#3498db" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Spacing="20">
+                <Button FontSize="Medium" Text="Save" Command="{Binding Save}" BackgroundColor="#3498db" TextColor="White" CornerRadius="15" />
+                <Button FontSize="Medium" Text="List" Command="{Binding Get}" BackgroundColor="#3498db" TextColor="White" CornerRadius="15" />
+            </StackLayout>
+
+            <ListView ItemsSource="{Binding Tasks}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10" Spacing="5" Margin="0,0,0,5" BackgroundColor="#E8E8E8">
+                                <Label Text="{Binding Title}" FontSize="Medium" TextColor="Black" />
+                                <Label Text="{Binding Description}" FontSize="Small" TextColor="Gray" />
+                                <Label Text="{Binding Status, Converter={StaticResource StatusConverter}}" FontSize="Small" TextColor="#3498db" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>
